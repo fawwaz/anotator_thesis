@@ -1,0 +1,4 @@
+-- select t.id from (select * from tweet_baru_sanitized limit 0,5000) as t where is_labelled_anotator3 != 0 or is_labelled_anotator1 != 0 or is_labelled_anotator2 != 0 
+-- select t.id from (select * from tweet_baru_sanitized limit 5000,5000) as t where is_labelled_anotator3 != 0 or is_labelled_anotator1 != 0 or is_labelled_anotator2 != 0 
+-- select t.id from (select * from tweet_baru_sanitized limit 10000,5000) as t where is_labelled_anotator3 != 0 or is_labelled_anotator1 != 0 or is_labelled_anotator2 != 0 
+-- select t.id from (select * from tweet_baru_sanitized limit 15000,5000) as t where is_labelled_anotator3 != 0 or is_labelled_anotator1 != 0 or is_labelled_anotator2 != 0 
