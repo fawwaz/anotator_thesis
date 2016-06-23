@@ -95,18 +95,17 @@
 		$scope.sending_to_server	= false;
 
 		function checkCookie(){
-			if($cookieStore.get("lower_limit_tesis_fawwaz")==undefined){
+			if($cookieStore.get("lower_limit_tesis_fawwaz")==null){
 				$state.go("settings");
 			}else{
 				$scope.user_lower_limit = $cookieStore.get("lower_limit_tesis_fawwaz");
 			}
-
-			if($cookieStore.get("username_tesis_fawwaz")==undefined){
+			if($cookieStore.get("username_tesis_fawwaz")==null){
 				$state.go("login");
-				
 			}else{
 				$scope.active_user = $cookieStore.get("username_tesis_fawwaz");
 			}
+
 
 
 		}
@@ -308,7 +307,7 @@
 
 		$scope.setCookie = function(){
 			$cookieStore.put("lower_limit_tesis_fawwaz",$scope.selected_level.lower_limit)
-			$state.go('home');
+			$state.go('help');
 		}
 
 		$scope.logout = function(){
@@ -328,7 +327,7 @@
 			var user_1 = ["winnie","dian","nindy","rahma","elian","izzan","burhan","ardityo","mahdan","harridi","felicia","sigit","nisa","hanna","ope","setyo","aji","ninik","windy","nashir","fawwaz1"];
 			var user_2 = ["pandu","faiz","arief","ted","alifa","hanif","gias","fajar","riva","fakhri","azzufar","joshua","kaito","azmi","iqbal","nonny","dara","didin","metri","mulki","fawwaz2"];
 			
-			if($scope.password=="123456"){
+			if($scope.password=="oktoberlulus"){
 				if(user_1.indexOf($scope.username)!=-1){
 					changeState("anotator1");
 				}else if(user_2.indexOf($scope.username)!=-1){

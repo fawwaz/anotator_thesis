@@ -14,6 +14,7 @@
 	
 	<script type="text/javascript" src="js/bower_components/angular/angular.min.js"></script>
 	<script type="text/javascript" src="js/bower_components/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/bower_components/angular-ui-router/release/angular-ui-router.min.js"> </script>
 	<script type="text/javascript" src="js/bower_components/angular-cookies/angular-cookies.min.js"></script>
 	<script type="text/javascript" src="js/bower_components/ngtweet/dist/ngtweet.min.js"></script>
