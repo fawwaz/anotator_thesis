@@ -1,0 +1,173 @@
+<div class="container">
+	<div class="header clearfix">
+		<nav>
+			<ul class="nav nav-pills pull-right">
+				<li role="presentation"><a ui-sref="home">Home</a></li>
+				<li role="presentation"><a ui-sref="settings">Settings</a></li>
+				<li role="presentation" class="active"><a ui-sref="help">Help</a></li>
+				<li role="presentation"><a ui-sref="home">Logout</a></li>
+			</ul>
+		</nav>
+		<h3 class="text-muted hidden-xs">Thesis Fawwaz</h3>
+	</div>
+
+	<div class="jumbotron">
+		<h1>Terimakasih sudah mau membantu</h1>
+		<p class="lead">Halaman ini berisi petunjuk mengenai bagaimana menggunakan aplikasi anotator data</p>
+	</div>
+
+	<div class="row marketing">
+		<h3>Frequently Asked question</h3>
+		<div class="row marketing">
+			<div class="col-lg-12">
+				<h4>Apa itu anotasi data ?</h4>
+				<p>Anotasi data adalah proses "mengajarkan" komputer mengenai kemampuan yang dimiliki manusia.</p>
+				<p>Misal terdapat sebuah kalimat : <i><b>Bisa</b> ular <b>bisa</b> mematikan</i></p>
+				<p>Pada kalimat diatas manusia mampu membedakan arti kata bisa yang memiliki makna "racun", atau meiliki makna "mampu". Sayangnya komputer tidak mampu membedakan makna arti ini karena hanya melihat sederetan huruf yang sama-sama dimulai dengan huruf B, diikuti dengan huruf I, S dan diakhir dengan huruf A.</p>
+				<p>Dalam kasus diatas, proses anotasinya adalah proses "mengajarkan komputer" dengan memberi tahu, mana kata bisa yang berarti "racun" mana yang berarti "mampu"</p>
+
+				<h4>TA / Thesis lu tentang apa waz ?</h4>
+				<p>TA / Thesis aing tentang bagaimana komputer mampu mebedakan informasi sebuah event (nama event, lokasi event dan waktu event) dari teks di twitter. Oleh karena itu proses anotasinya adalah "mengajarkan komputer" mana potongan kata / teks di twitter yang berupa nama event, waktu event atau lokasi event.</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="row marketing">
+		<h3>Cara menggunakan</h3>
+		<div class="row marketing">
+			<div class="col-lg-12">
+				<h4>1. Login di http://tesisfawwaz.hol.es </h4>
+				<p>Silahkan login dengan username yang sudah diberikan. Passwordnya 123456.</p>
+				<div class="row">
+					<div class="col-xs-12">
+						<a href="#" class="thumbnail">
+							<img src="img/signin.PNG" alt="">
+						</a>
+					</div>
+				</div>
+				<h4>2. Pilih level </h4>
+				<p>Tekan menu pilihan level, klik tombol "pilih level!" </p>
+				<div class="row">
+					<div class="col-xs-12">
+						<a href="#" class="thumbnail">
+							<img src="img/level.PNG" alt="">
+						</a>
+					</div>
+				</div>
+				<h4>3. Aplikasi Utama</h4>
+				<p>Aplikasi utama anotator data terdiri dari tampilan seperti berikut</p>
+				<div class="row">
+					<div class="col-xs-12">
+						<a href="#" class="thumbnail">
+							<img src="img/home.PNG" alt="">
+						</a>
+					</div>
+				</div>
+				<h5><b>Pembagian Layout Anotator Data</b></h5>
+				<ol>
+					<li>Bagian Kiri 
+						<p>Bagian ini adalah menu utama (tools) anotasi data</p>
+					</li>
+					<li>Bagian Kanan
+						<p>Bagian ini adalah preview dari tweet yang sedang dikerjakan.</p>
+					</li>
+					<li>
+						Bagian Bawah
+						<p>Bagian ini adalah navigasi untuk pindah soal.</p>
+					</li>
+				</ol>
+				<br>
+				<h5><b>Bagian Kiri</b></h5>
+				<p>Bagian ini berfungsi untuk melakukan anotasi data. Ada 3 bagian di dalam komponen ini. :</p>
+				<ol>
+					<li>Bagian atas
+						<p>Bagian berisi soal yang harus dijawab</p>
+					</li>
+					<li>
+						Bagian Tengah
+						<p>Bagian ini berisi tampilan label yang sedang dipilih</p>
+					</li>
+					<li>
+						Bagian Bawah
+						<p>Bagian ini berisi 4 buah tombol label yang digunakan untuk mengganti / menjawab pertanyaan</p>
+						<p>Tombol-tombol ini digunakan untuk menandai informasi event pada pertanyaan di bagian atas. Tekan tombol informasi yang bersesuaian kemudian tandai diantara kata-kata di sebelah kiri yang merupakan informasi event. Tombol "hapus" digunakan untuk mengkoreksi jika ada kata yang tidak sengaja ditandai sebagai informasi event padahal tidak relevan.</p>
+					</li>
+				</ol>
+				<br>
+				<h5><b>Bagian Kanan</b></h5>
+				<p>Bagian kanan berisi preview tweet yang sedang dikerjakan. <b>Kadang-kadang isi previewnya suka ngaco dan gak sesuai sama teks</b>. Dalam kasus seperti ini, abaikan preview tweet di sebelah kanan, kerjakan saja yang di bagian kiri.</p>
+				<div class="row">
+					<div class="col-xs-12">
+						<a href="#" class="thumbnail">
+							<img src="img/error1.PNG" alt="">
+						</a>
+					</div>
+				</div>
+				<br>
+				<h5><b>Bagian Bawah</b></h5>
+				<p>Bagian bawah terdiri dari 2 tombol, save dan previous. Tombol save digunakan untuk menyimpan jawaban dan pindah soal maju, tombol previous digunakan untuk mundur satu soal. <b>Jangan menekan tombol save berkali-kali</b> karena akan otomatis maju beberapa soal dan membuat error. Harap bersabar ketika sistem sedang mengambil pertanyaan</p>
+
+				<br><hr><br>
+				<h5><b>Contoh Pengerjaan</b></h5>
+				<p>Sebagai contoh , terdapat Tweet berbunyi : </p> 
+				<p class="text-center"><i>2 in 1 workshop w/ tedza make up and hair | 18 nov ' 15 at swiss berlin , manyar | 082230697879.</i></p>
+				<p>Maka dalam tweet diatas dapat diketahui beberapa komponen event yaitu :</p>
+				<ol>
+					<li><b>Nama Event</b> : 2 in 1 workshop </li>
+					<li><b>Waktu Event</b> : 18 nov ' 15</li>
+					<li><b>Lokasi Event</b> : swiss berlin , manyar</li>
+				</ol>
+				<p>sehingga yang dilakukan adalah sebagai berikut : </p>
+				<div class="row">
+					<div class="col-xs-12">
+						<a href="#" class="thumbnail">
+							<img src="img/demo1.gif" alt="">
+						</a>
+					</div>
+				</div>
+				<p>Terakhir, jangan lupa tekan tombol save, untuk pindah soal</p>
+				<br>
+				<h5><b>Terlanjur di save, bisa diperbaiki gak ? </b></h5>
+				<p>Jika sewaktu-waktu kamu ragu ada tweet yang terlanjur di save tapi masih belum tepat ditandai seperti contoh kasus diatas (saya tidak sengaja menandai kata "morning asaap" sebagai nama event, tekan tombol previous untuk kembali ke tweet sebelumnya dan kamu bisa memperbaikinya dengan penanda informasi event yang baru (timpa saja). perhatikan contoh berikut : </p>
+				<div class="row">
+					<div class="col-xs-12">
+						<a href="#" class="thumbnail">
+							<img src="img/demo2.gif" alt="">
+						</a>
+					</div>
+				</div>
+				<br>
+				<h5><b>Gimana kalau gak ada sama sekali informasi evetn di dalam tweet ? </b></h5>
+				<p>Dalam tweet diatas tidak terdapat sama sekali nama, waktu atau lokasi event karena tweetnya adalah tweet lowongan pekerjaan. Dengan demikian, silahkan langsung tekan tombol save untuk melompati pertanyaan tersebut.</p>
+				<div class="row">
+					<div class="col-xs-12">
+						<a href="#" class="thumbnail">
+							<img src="img/non-event.PNG" alt="">
+						</a>
+					</div>
+				</div>
+				<p>Dalam kasus tertentu, <b>tidak ada sama sekali</b> informasi event dalam tweet yang diberikan, jika menemukan kasus seperti ini, silahkan tekan tombol save (biarkan kosong) dan soal akan diganti dengan tweet baru. Contohnya kasus berikut: terdapat tweet : </p>
+				<p class="text-center"><i>#info konsumsi makanan pedas pada malam hari bisa picu mimpi buruk : pakar menyarankan anda un ... #infobanjarmasin</i></p>
+
+				<h4>4. Selesai level </h4>
+				<p>Seandainya kamu sudah menyelesaikan sebuah level, kamu bisa mengganti ke level lain dengan menekan tombol settings di bagian atas</p>
+				<div class="row">
+					<div class="col-xs-12">
+						<a href="#" class="thumbnail">
+							<img src="img/selesai.gif" alt="">
+						</a>
+					</div>
+				</div>
+				<h4>Pertanyaan</h4>
+				<p>Jika menemukan kebingungan, silahkan tanyakan langsung ke saya ! terimakasih sudah membantu saya lulus</p>
+				
+				<h4>Tips</h4>
+				<p>Malas menggunakan laptop ? Kamu bisa membantu fawwaz sambil tidur-tiduran di kasur dengan menggunakan tablet / handphone saja ! buka http://tesisfawwaz.hol.es di google chrome android atau UC Browser dan selesaikan levelnya. </p>
+			</div>
+		</div>
+	</div>
+	
+	<footer class="footer">
+		<p>&copy; 2015 Company, Inc.</p>
+	</footer>
+</div>

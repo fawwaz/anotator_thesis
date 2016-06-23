@@ -1,0 +1,25 @@
+<div class="container">
+	<div class="header clearfix">
+		<nav>
+			<ul class="nav nav-pills pull-right">
+				<li role="presentation"><a ui-sref="home">Home</a></li>
+				<li role="presentation" class="active"><a ui-sref="settings">Settings</a></li>
+				<li role="presentation"><a ui-sref="help">Help</a></li>
+				<li role="presentation"><a ng-click="logout();">Logout</a></li>
+			</ul>
+		</nav>
+		<h3 class="text-muted hidden-xs">Thesis Fawwaz</h3>
+	</div>
+	<div class="jumbotron">
+		<h1>Halaman Settings</h1>
+		<p class="lead">Pilih dropdown, kemudian tekan tombolnya.</p>
+		<p>Pilih level : <select ng-model="selected_level" ng-options="level.label for level in levels"></select></p>
+		<p><a class="btn btn-lg btn-success" href="#" role="button" ng-click="setCookie()">Yup Pilih level ini !</a></p>
+	</div>
+
+	<footer class="footer">
+		<p>&copy; 2015 Company, Inc.</p>
+	</footer>
+</div>
+<!-- <select ng-model="selected_level" ng-options="level.label for level in levels"></select>
+<button ng-click="setCookie()">Pilih Level !</button> -->
