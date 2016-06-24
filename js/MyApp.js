@@ -3,7 +3,7 @@
 	// var app = angular.module('MyApp', ['ui.router','ngCookies']);
 	// local
 	var server_basename = "http://localhost/tesisfawwaz";
-	// var server_basename = "http://192.168.1.6/tesisfawwaz";
+	// var server_basename = "http://192.168.1.5/tesisfawwaz";
 	// deployment
 	// var server_basename = "http://tesisfawwaz.hol.es";
 
@@ -45,54 +45,80 @@
 			});
 		}
 
-		// Send Data to server
-		// Dbase.saveLabels = function(datas,session,is_labelled_code,callback){
-		Dbase.saveLabels = function(datas,session,is_labelled_code,twitter_tweet_id,callback){
-			console.log("Save labels");
-			console.log("is_labelled_code : "+is_labelled_code);
-			console.log("twitter_tweet_id is : "+twitter_tweet_id)
-
-			console.log(session);
-			$http.get(server_basename+'/api/update_label',{
-				params:{
-					datas:JSON.stringify(datas),
+		Dbase.saveRandomToken = function(session,buffer_input,batch_label,callback){
+			$http({
+				method: 'POST',
+				url: server_basename+"/api/update_random_token",
+				data: $.param({
 					session:session,
-					is_labelled_code:is_labelled_code,
-					twitter_tweet_id:twitter_tweet_id
-				}
+					datas:JSON.stringify(buffer_input),
+					batch_labels:JSON.stringify(batch_label)
+				}),
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 			}).then(function(response){
-				console.log("response save label adalah : ");
-				console.log(response);
 				callback(response);
 			});
 		}
 
-		return Dbase;
-	}]);
+		Dbase.getCounter = function(session,lower_limit,callback){
+			$http.get(server_basename+"/api/count",{
+				params:{
+					session:session,
+					lower_limit:lower_limit
+				}
+			}).then(function(response){
+				callback(response);
+			});
+		}
+
+		// Send Data to server
+		// Dbase.saveLabels = function(datas,session,is_labelled_code,callback){
+			Dbase.saveLabels = function(datas,session,is_labelled_code,twitter_tweet_id,callback){
+				console.log("Save labels");
+				console.log("is_labelled_code : "+is_labelled_code);
+				console.log("twitter_tweet_id is : "+twitter_tweet_id)
+
+				console.log(session);
+				$http.get(server_basename+'/api/update_label',{
+					params:{
+						datas:JSON.stringify(datas),
+						session:session,
+						is_labelled_code:is_labelled_code,
+						twitter_tweet_id:twitter_tweet_id
+					}
+				}).then(function(response){
+					console.log("response save label adalah : ");
+					console.log(response);
+					callback(response);
+				});
+			}
+
+			return Dbase;
+		}]);
 
 
-	app.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider) {
-		$urlRouterProvider.otherwise('/home');
-		$stateProvider
-		.state('home',{
-			url:'/home',
-			templateUrl:'views/partials/home.html',
-			controller:'HomeController'
-		}).state('settings',{
-			url:'/settings',
-			templateUrl:'views/partials/settings.html',
-			controller:'SettingsController'
-		}).state('login',{
-			url:'/login',
-			templateUrl:'views/partials/login.html',
-			controller:'LoginController'
-		}).state('help',{
-			url:'/help',
-			templateUrl:'views/partials/help.html'
-		});
-	}]);
+app.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider) {
+	$urlRouterProvider.otherwise('/home');
+	$stateProvider
+	.state('home',{
+		url:'/home',
+		templateUrl:'views/partials/home.html',
+		controller:'HomeController'
+	}).state('settings',{
+		url:'/settings',
+		templateUrl:'views/partials/settings.html',
+		controller:'SettingsController'
+	}).state('login',{
+		url:'/login',
+		templateUrl:'views/partials/login.html',
+		controller:'LoginController'
+	}).state('help',{
+		url:'/help',
+		templateUrl:'views/partials/help.html'
+	});
+}]);
 
-	app.controller('HomeController', ['$scope','DBase','$cookieStore','$state','$compile','$window',function($scope,DBase,$cookieStore,$state,$compile,$window){
+app.controller('HomeController', ['$scope','DBase','$cookieStore','$state','$compile','$window',function($scope,DBase,$cookieStore,$state,$compile,$window){
 		// Variable Global
 		$scope.level_completed		= false;
 		$scope.active_label			= 'other';
@@ -139,6 +165,15 @@
 			}
 		}
 
+		function getLabelForSequenceNum(seq_num){
+			for (var i = 0; i < $scope.buffer_input.length; i++) {
+				if($scope.buffer_input[i].sequence_num == seq_num){
+					return $scope.buffer_input[i].label;
+				}
+			};
+			return 'other'; // default value when not exist 0 means not yet labelled 1 means important tweet 2 means unimportant tweet
+		}
+
 
 		// Digunakan untuk mengambil daftar id yang belum diberi label, dijalankan sekali selama satu sesi anotasi
 		// Menggunakan label is_unlabelled_data_retrieved untuk menandai apakah sudah data sudah diteirma oleh browser (ingat javascript adalah asynchronous)
@@ -154,7 +189,7 @@
 				}
 			});
 		}
-		getUnLabelledData(); 
+		//getUnLabelledData(); 
 
 		// Menampilkan daftar token untuk ditampilkan ke layar
 		function loadTokenToScreen(){
@@ -184,12 +219,62 @@
 
 		// NEW
 		function loadRandomToScreen(){
+			$scope.is_unlabelled_data_retrieved = false;
 			DBase.getRandomToken($scope.active_user,$scope.user_lower_limit,function(response){
 				console.log(response.data.result);
+				console.log("retrieved random datas");
 				$scope.random_tokens = response.data.result;
+				for(var key in $scope.random_tokens){
+					for (var i = 0; i < $scope.random_tokens[key].length; i++) {
+						if($scope.random_tokens[key][i]["label_"+$scope.active_user]==null){
+							InsertOrUpdateBufferInput($scope.random_tokens[key][i].sequence_num, 'other');
+						}else{
+							$scope.random_tokens[key][i]
+							InsertOrUpdateBufferInput($scope.random_tokens[key][i].sequence_num, $scope.random_tokens[key][i]["label_"+$scope.active_user]);
+						}						
+					};
+				}
+				$scope.is_unlabelled_data_retrieved = true;
+				$scope.updateProgressCounter();
 			});
 		}
 		loadRandomToScreen();
+
+		function updateLabelFromBufferInput(){
+			$scope.batch_label = [];
+			for(var key in $scope.random_tokens){
+
+				// Check first 
+				var label_code	= 2; // default unlabelled 0 , labelled as important = 1, unimportant = 2
+				var stop_loop	= false;
+				for (var i = 0; i < $scope.random_tokens[key].length&&(!stop_loop); i++) {
+					if(getLabelForSequenceNum($scope.random_tokens[key][i].sequence_num)!="other"){
+						label_code = 1;
+						stop_loop = true;
+					}
+				};
+				// push the batch label...
+				$scope.batch_label.push({twitter_tweet_id:key,label:label_code});
+			}
+		}
+
+		$scope.saveRandomToken = function(){
+			$scope.sending_to_server = true;
+			updateLabelFromBufferInput();
+			DBase.saveRandomToken($scope.active_user,$scope.buffer_input,$scope.batch_label,function(response){
+				$scope.sending_to_server = false;
+			});
+			loadRandomToScreen();
+		}
+
+		$scope.updateProgressCounter = function(){
+			DBase.getCounter($scope.active_user,$scope.user_lower_limit,function(response){
+				var maximum		= 5000;
+				$scope.progress = response.data.result[0].counter / maximum * 100;
+				$scope.unlabelled_counter = 5000 - response.data.result[0].counter;
+			});
+		}
+
 
 
 		$scope.moveToNextTweet = function(){
@@ -302,62 +387,62 @@
 			$state.go('login');
 		}
 
-		$scope.previewTweet = function(){
-			$window.open('http://twitter.com/fawwaz_muhammad/status/'+$scope.unlabelled_tweet_ids[$scope.current_tweet].id,'Tweet preview','target=_blank,width=400,height=400');
+		$scope.previewTweet = function(tweet_id){
+			$window.open('http://twitter.com/fawwaz_muhammad/status/'+tweet_id,'Tweet preview','target=_blank,width=400,height=400');
 		}
 
 	}]);
 
-	app.controller('SettingsController', ['$scope','DBase','$cookieStore','$state',function($scope,DBase,$cookieStore,$state){
-		
-		$scope.levels = [{
-			label : "level 1",
-			lower_limit: 0
-		},{
-			label : "level 2",
-			lower_limit: 5000
-		},{
-			label : "level 3",
-			lower_limit: 10000
-		},{
-			label : "level 4",
-			lower_limit: 15000
-		}];
+app.controller('SettingsController', ['$scope','DBase','$cookieStore','$state',function($scope,DBase,$cookieStore,$state){
+
+	$scope.levels = [{
+		label : "level 1",
+		lower_limit: 0
+	},{
+		label : "level 2",
+		lower_limit: 5000
+	},{
+		label : "level 3",
+		lower_limit: 10000
+	},{
+		label : "level 4",
+		lower_limit: 15000
+	}];
 
 
-		$scope.setCookie = function(){
-			$cookieStore.put("lower_limit_tesis_fawwaz",$scope.selected_level.lower_limit)
-			$state.go('help');
-		}
+	$scope.setCookie = function(){
+		$cookieStore.put("lower_limit_tesis_fawwaz",$scope.selected_level.lower_limit)
+		$state.go('help');
+	}
 
-		$scope.logout = function(){
-			$cookieStore.remove("username_tesis_fawwaz");
-			$state.go('login');
-		}
-	}]);
+	$scope.logout = function(){
+		$cookieStore.remove("username_tesis_fawwaz");
+		$state.go('login');
+	}
+}]);
 
-	app.controller('LoginController', ['$scope','$cookieStore','$state',function($scope,$cookieStore,$state){
-		$scope.error_password = false;
+app.controller('LoginController', ['$scope','$cookieStore','$state',function($scope,$cookieStore,$state){
+	$scope.error_password = false;
 
-		function changeState(username){
-			$cookieStore.put("username_tesis_fawwaz",username);
-			$state.go('settings');
-		}
-		$scope.login = function(){
-			var user_1 = ["winnie","dian","nindy","rahma","elian","izzan","burhan","ardityo","mahdan","harridi","felicia","sigit","nisa","hanna","ope","setyo","aji","ninik","windy","nashir","fawwaz1"];
-			var user_2 = ["pandu","faiz","arief","ted","alifa","hanif","gias","fajar","riva","fakhri","azzufar","joshua","kaito","azmi","iqbal","nonny","dara","didin","metri","mulki","fawwaz2"];
-			
-			if($scope.password=="oktoberlulus"){
-				if(user_1.indexOf($scope.username)!=-1){
-					changeState("anotator1");
-				}else if(user_2.indexOf($scope.username)!=-1){
-					changeState("anotator2");
-				}else{
-					changeState("anotator3");
-				}		
+	function changeState(username){
+		$cookieStore.put("username_tesis_fawwaz",username);
+		$state.go('settings');
+	}
+	$scope.login = function(){
+		var user_1 = ["winnie","dian","nindy","rahma","elian","izzan","burhan","ardityo","mahdan","harridi","felicia","sigit","nisa","hanna","ope","setyo","aji","ninik","windy","nashir","fawwaz1"];
+		var user_2 = ["pandu","faiz","arief","ted","alifa","hanif","gias","fajar","riva","fakhri","azzufar","joshua","kaito","azmi","iqbal","nonny","dara","didin","metri","mulki","fawwaz2"];
+
+		if($scope.password=="oktoberlulus"){
+			if(user_1.indexOf($scope.username)!=-1){
+				changeState("anotator1");
+			}else if(user_2.indexOf($scope.username)!=-1){
+				changeState("anotator2");
 			}else{
-				$scope.error_password = true;
-			}
+				changeState("anotator3");
+			}		
+		}else{
+			$scope.error_password = true;
 		}
-	}]);
+	}
+}]);
 })();

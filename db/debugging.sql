@@ -1,0 +1,4 @@
+-- select * from tweet_baru_sanitized_tokenized_no_url where twitter_tweet_id = 654182461249818624
+-- update tweet_baru_sanitized_tokenized_no_url set label_anotator3 = null 
+-- select * from tweet_baru_sanitized where id = 654182461249818624
+-- update tweet_baru_sanitized set is_labelled_anotator1 = 0

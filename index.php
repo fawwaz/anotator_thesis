@@ -30,7 +30,7 @@ $database = new medoo([
 $db_name 	 = "mytomcatapp";
 $table_token = "tweet_baru_sanitized_tokenized_no_url";
 $table_tweet = "tweet_baru_sanitized";
-
+$per_page 	 = 3;
 /*
  ================================================================================
 								   API LIST      								
@@ -129,9 +129,8 @@ Flight::route('/api/update_label', function() use($database,$table_token,$table_
 Flight::route('/api/count',function() use($database,$table_tweet){
 	$column_anotator	= "is_labelled_".$_GET['session'];
 	$lower_limit		= $_GET['lower_limit'];
-	$datas = "lagi di comment coy printah mysqlnya ";
 	// $datas				= $database->query("SELECT count(*) as counter from (select ".$column_anotator." from tweet_baru_sanitized limit ".$lower_limit.",5000) as t WHERE t.".$column_anotator." != 0")->fetchAll();
-	// $datas				= $database->query("SELECT count(*) as counter from (select ".$column_anotator." from tweet_baru_sanitized limit ".$lower_limit.",5000) as t WHERE t.".$column_anotator." != 0")->fetchAll();
+	$datas				= $database->query("SELECT count(*) as counter from (select ".$column_anotator." from tweet_baru_sanitized limit ".$lower_limit.",5000) as t WHERE t.".$column_anotator." != 0")->fetchAll();
 
 	$response = array(
 		"status"		=> "OK",
@@ -143,18 +142,18 @@ Flight::route('/api/count',function() use($database,$table_tweet){
 	Flight::json($response);
 });
 
-Flight::route('/api/get_random_token',function() use($database,$table_token,$table_tweet) {
-	$column_anotator	= "is_labelled_anotator3";
-	$lower_limit		= 100;
-	$per_page			= 10;
+Flight::route('/api/get_random_token',function() use($database,$table_token,$table_tweet,$per_page) {
+	$session			= $_GET['session'];
+	$lower_limit		= $_GET['lower_limit'];
+	$column_anotator	= "is_labelled_".$session;
+	$column_anotator2	= "label_".$session;
 
-	// $column_anotator	= "is_labelled_".$_GET['session'];
-	// $lower_limit		= $_GET['lower_limit'];
+
 	$datas = $database->query("SELECT t.* from (SELECT * from tweet_baru_sanitized limit ".$lower_limit.",5000) as t WHERE t.".$column_anotator." = 0")->fetchAll();
 
 	for ($i=0; $i < $per_page; $i++) { 
 		$current_id					= $datas[rand(0,count($datas)-1)]["id"];
-		$current_tokens				= $database->query("SELECT sequence_num,token FROM tweet_baru_sanitized_tokenized_no_url where twitter_tweet_id = ".$current_id)->fetchAll();
+		$current_tokens				= $database->query("SELECT sequence_num,token,".$column_anotator2." FROM tweet_baru_sanitized_tokenized_no_url where twitter_tweet_id = ".$current_id)->fetchAll();
 		$selected_data[$current_id]	= $current_tokens;
 		// $res						= $database->query("UPDATE tweet_baru_sanitized SET ".$column_anotator." = 3 WHERE id =".$current_id)->fetchAll();
 	}
@@ -171,66 +170,41 @@ Flight::route('/api/get_random_token',function() use($database,$table_token,$tab
 });
 
 
-Flight::route('/api/update_random_token',function() use($database,$table_token,$table_tweet) {
-	//$datas				= json_decode($_GET['datas']);
-	//$labels 				= json_decode($_GET["labels"]);
-	$datas[1]["sequence_num"]	= "1";
-	$datas[1]["label"]		= "other";
-	$datas[2]["sequence_num"]	= "2";
-	$datas[2]["label"]		= "other";
-	$datas[3]["sequence_num"]	= "3";
-	$datas[3]["label"]		= "i-time";
-	$datas[4]["sequence_num"]	= "4";
-	$datas[4]["label"]		= "i-place";
-
-	$datas[5]["sequence_num"]	= "5";
-	$datas[5]["label"]		= "other";
-	$datas[6]["sequence_num"]	= "6";
-	$datas[6]["label"]		= "other";
-	$datas[7]["sequence_num"]	= "7";
-	$datas[7]["label"]		= "other";
-
-	$datas[8]["sequence_num"]	= "8";
-	$datas[8]["label"]		= "other";
-	$datas[9]["sequence_num"]	= "9";
-	$datas[9]["label"]		= "i-name";
-
-	$labels[1]["id"] = "1";
-	$labels[1]["is_labelled"] = "1";
-	
-	$labels[2]["id"] = "2";
-	$labels[2]["is_labelled"] = "2";
-
-	$labels[3]["id"] = "3";
-	$labels[3]["is_labelled"] = "1";
-
-	$column_anotator	= "is_labelled_anotator3";
+Flight::route('/api/update_random_token',function() use($database,$table_token,$table_tweet,$per_page) {
+	$datas				= json_decode($_POST['datas']);
+	$labels 			= json_decode($_POST["batch_labels"]);
+	$column_anotator 	= "is_labelled_".$_POST['session'];
+	$column_anotator2 	= "label_".$_POST['session'];
 	$lower_limit		= 100;
-	$per_page			= 10;
 
 	// 1. Update label based on sequence number
 	foreach ($datas as $key => $value) {
-		// $result = $database->update($table_token,
-		// 	[$column_anotator=>$value->label],
-		// 	["sequence_num"=>((int)$value->sequence_num)]
-		// );
+		$result = $database->update($table_token,
+			[$column_anotator2=>$value->label],
+			["sequence_num"=>((int)$value->sequence_num)]
+		);
+	}
+
+	foreach ($labels as $key => $value) {
+		$is_labelled_code = $value->label;
+		$twitter_tweet_id = $value->twitter_tweet_id;
+		$result = $database->query("UPDATE `".$table_tweet."` SET `". $column_anotator."` = ". ((int)$is_labelled_code). " WHERE id=".$twitter_tweet_id)->fetchAll();
 	}
 	
-	/*
+	
 	$response = array(
 		"status"		=> "DISABLED UPDATE",
 		"response_code"	=> 200,
-		"result"		=> $selected_data
+		"result"		=> $result
 	);
 	Flight::json($response);
-	*/
 });
 
 Flight::route('/tes',function(){
 	$response = array(
 		"status"		=> "OK",
 		"response_code"	=> 200,
-		"result"		=> "tes aja kok bisa gak"
+		"result"		=> $_POST
 	);
 
 	Flight::json($response);

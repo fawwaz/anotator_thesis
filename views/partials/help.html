@@ -67,37 +67,21 @@
 				</div>
 				<h5><b>Pembagian Layout Anotator Data</b></h5>
 				<ol>
-					<li>Bagian Kiri 
+					<li>Bagian Atas
 						<p>Bagian ini adalah menu utama (tools) anotasi data</p>
 					</li>
-					<li>Bagian Kanan
-						<p>Bagian ini adalah preview dari tweet yang sedang dikerjakan.</p>
-					</li>
-					<li>
-						Bagian Bawah
-						<p>Bagian ini adalah navigasi untuk pindah soal.</p>
+					<li>Bagian Bawah
+						<p>Bagan ini adalah tabel Berisi daftar pertanyaan &amp; preview tweet.</p>
 					</li>
 				</ol>
 				<br>
-				<h5><b>Bagian Kiri</b></h5>
-				<p>Bagian ini berfungsi untuk melakukan anotasi data. Ada 3 bagian di dalam komponen ini. :</p>
-				<ol>
-					<li>Bagian atas
-						<p>Bagian berisi soal yang harus dijawab</p>
-					</li>
-					<li>
-						Bagian Tengah
-						<p>Bagian ini berisi tampilan label yang sedang dipilih</p>
-					</li>
-					<li>
-						Bagian Bawah
-						<p>Bagian ini berisi 4 buah tombol label yang digunakan untuk mengganti / menjawab pertanyaan</p>
-						<p>Tombol-tombol ini digunakan untuk menandai informasi event pada pertanyaan di bagian atas. Tekan tombol informasi yang bersesuaian kemudian tandai diantara kata-kata di sebelah kiri yang merupakan informasi event. Tombol "hapus" digunakan untuk mengkoreksi jika ada kata yang tidak sengaja ditandai sebagai informasi event padahal tidak relevan.</p>
-					</li>
-				</ol>
+				<h5><b>Bagian Atas</b></h5>
+				<p>Ada 3 buah tombol yang dapat digunakan untuk menandai informasi event di tweet. Tombol hapus digunakan untuk menghapus tanda informasi event jika tidak sengaja ter-tekan.</p>
+				<p>Tekan salah satu tombol untuk mengganti tanda yang aktif digunakan, kemudian tekan kata-kata yang sesuai dengan informasi event pada soal (akan dijelaskan pada penjelasan contoh pengerjaan berupa gambar begerak gif di penjelasan selanjutnya)</p>
 				<br>
-				<h5><b>Bagian Kanan</b></h5>
-				<p>Bagian kanan berisi preview tweet yang sedang dikerjakan. <b>Kadang-kadang isi previewnya suka ngaco dan gak sesuai sama teks</b>. Dalam kasus seperti ini, abaikan preview tweet di sebelah kanan, kerjakan saja yang di bagian kiri.</p>
+				<h5><b>Bagian Bawah</b></h5>
+				<p>Ada dua kolom utama dalam bagian tabel ini.</p>
+				<p>Kolom kanan berisi preview tweet yang sedang dikerjakan. <b>Kadang-kadang isi previewnya suka ngaco dan gak sesuai sama teks</b>. Dalam kasus seperti ini, abaikan preview tweet di sebelah kanan, kerjakan saja yang di bagian kiri.</p>
 				<div class="row">
 					<div class="col-xs-12">
 						<a href="#" class="thumbnail">
@@ -106,18 +90,17 @@
 					</div>
 				</div>
 				<br>
-				<h5><b>Bagian Bawah</b></h5>
-				<p>Bagian bawah terdiri dari 2 tombol, save dan previous. Tombol save digunakan untuk menyimpan jawaban dan pindah soal maju, tombol previous digunakan untuk mundur satu soal. <b>Jangan menekan tombol save berkali-kali</b> karena akan otomatis maju beberapa soal dan membuat error. Harap bersabar ketika sistem sedang mengambil pertanyaan</p>
+				<h5><b>Kolom kiri</b></h5>
+				<p>Berisi soal-soal yang harus dikerjakan</p>
 
 				<br><hr><br>
-				<h3 class="text-center"><b>Contoh Pengerjaan</b></h3>
+				<h1 class="text-center"><b>Contoh Pengerjaan</b></h1>
 				<p>Sebagai contoh , terdapat Tweet berbunyi : </p> 
-				<p class="text-center"><i>2 in 1 workshop w/ tedza make up and hair | 18 nov ' 15 at swiss berlin , manyar | 082230697879.</i></p>
-				<p>Maka dalam tweet diatas dapat diketahui beberapa komponen event yaitu :</p>
+				<p class="text-center"><i>#Jogja @jogjaberkebun : 10 / 10 / 15 06.00 ngebunkece agenda olah tanah , pembibitan, dll di jl agrolubang 19 baciro | free</p>
 				<ol>
-					<li><b>Nama Event</b> : 2 in 1 workshop </li>
-					<li><b>Waktu Event</b> : 18 nov ' 15</li>
-					<li><b>Lokasi Event</b> : swiss berlin , manyar</li>
+					<li><b>Nama Event</b> : @jogjaberkebun </li>
+					<li><b>Waktu Event</b> : 10 / 10 / 15 06.00</li>
+					<li><b>Lokasi Event</b> : jl agrolubang 19 baciro</li>
 				</ol>
 				<p>sehingga yang dilakukan adalah sebagai berikut : </p>
 				<div class="row">
@@ -127,7 +110,7 @@
 						</a>
 					</div>
 				</div>
-				<p>Terakhir, jangan lupa tekan tombol save, untuk pindah soal</p>
+				<p>Lanjutkan menjawab seluruh pertanyaan hingga bagian bawah. Terakhir, jangan lupa tekan tombol save, untuk pindah soal</p>
 				<br>
 
 				
@@ -144,14 +127,7 @@
 						</div>
 						<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
 							<div class="panel-body">
-								<p>Jika sewaktu-waktu kamu ragu ada tweet yang terlanjur di save tapi masih belum tepat ditandai seperti contoh kasus diatas (saya tidak sengaja menandai kata "morning asaap" sebagai nama event, tekan tombol previous untuk kembali ke tweet sebelumnya dan kamu bisa memperbaikinya dengan penanda informasi event yang baru (timpa saja). perhatikan contoh berikut : </p>
-								<div class="row">
-									<div class="col-xs-12">
-										<a href="#" class="thumbnail">
-											<img src="img/demo2.gif" alt="">
-										</a>
-									</div>
-								</div>
+								<p>Setelah dilakukan perubahan, saat ini, jika melakukan kesalahan dan terlanjur menekan tombol save, tidak bisa diperbaiki. Oleh karena itu diharapkan lebih berhati-hati</p>
 								<br>
 							</div>
 						</div>
@@ -166,7 +142,8 @@
 						</div>
 						<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
 							<div class="panel-body">
-								<p>Dalam tweet diatas tidak terdapat sama sekali nama, waktu atau lokasi event karena tweetnya adalah tweet lowongan pekerjaan. Dengan demikian, silahkan langsung tekan tombol save untuk melompati pertanyaan tersebut.</p>
+								<p>Dalam kasus tertentu, <b>tidak ada sama sekali</b> informasi event dalam tweet yang diberikan, jika menemukan kasus seperti ini, silahkan lompati (biarkan kosong). Contohnya kasus berikut: terdapat tweet : </p>
+								<p class="text-center"><i>Kamu mau wisuda? mau coba baju "Jomblo tetap bisa WISUDA" 80K!</i></p>
 								<div class="row">
 									<div class="col-xs-12">
 										<a href="#" class="thumbnail">
@@ -174,8 +151,7 @@
 										</a>
 									</div>
 								</div>
-								<p>Dalam kasus tertentu, <b>tidak ada sama sekali</b> informasi event dalam tweet yang diberikan, jika menemukan kasus seperti ini, silahkan tekan tombol save (biarkan kosong) dan soal akan diganti dengan tweet baru. Contohnya kasus berikut: terdapat tweet : </p>
-								<p class="text-center"><i>#info konsumsi makanan pedas pada malam hari bisa picu mimpi buruk : pakar menyarankan anda un ... #infobanjarmasin</i></p>
+								<p>Dalam tweet diatas tidak terdapat sama sekali nama, waktu atau lokasi event karena tweetnya adalah tweet iklan jualan baju. Dengan demikian, silahkan lompati soal tersebut, kerjakan soal selanjutnya.</p>
 							</div>
 						</div>
 					</div>
@@ -189,7 +165,7 @@
 						</div>
 						<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
 							<div class="panel-body">
-								<p>Kadang kadang ada tweet yang informasi eventnya tidak lengkap, contohnya ada nama eventnya tapi tidak ada lokasi atau waktu event. Yang kamu harus lakukan adalah HANYA informasi yang ada saja di dalam tweet tersebut. Jadi misal ada tweet seperti ini : </p>
+								<p>Kadang kadang ada tweet yang informasi eventnya tidak lengkap, contohnya ada nama eventnya tapi <b>tidak ada lokasi atau waktu event</b>. Yang kamu harus lakukan adalah HANYA informasi yang ada saja di dalam tweet tersebut. Jadi misal ada tweet seperti ini : </p>
 								<p class="text-center"><i></i></p>
 								<div class="row">
 									<div class="col-xs-12">
