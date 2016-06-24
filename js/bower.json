@@ -24,6 +24,8 @@
     "jquery": "^2.2.4",
     "angular-cookies": "^1.5.7",
     "bootstrap": "^3.3.6",
-    "ngtweet": "^0.5.1"
+    "ngtweet": "^0.5.1",
+    "angular-bootstrap-affix": "^0.2.2",
+    "angular-fixed-table-header": "^0.2.1"
   }
 }

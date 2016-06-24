@@ -1,5 +1,5 @@
 (function(){
-	var app = angular.module('MyApp', ['ui.router','ngCookies','ngtweet']);
+	var app = angular.module('MyApp', ['ui.router','ngCookies','ngtweet','mgcrea.bootstrap.affix','anguFixedHeaderTable','fixed.table.header']);
 	// var app = angular.module('MyApp', ['ui.router','ngCookies']);
 	// local
 	var server_basename = "http://localhost/tesisfawwaz";
@@ -30,8 +30,17 @@
 					twitter_tweet_id:twitter_tweet_id
 				}
 			}).then(function(response){
-				console.log("response token group");
-				console.log(response);
+				callback(response);
+			});
+		}
+
+		Dbase.getRandomToken = function(session,lower_limit,callback){
+			$http.get(server_basename+"/api/get_random_token",{
+				params:{
+					session:session,
+					lower_limit:lower_limit
+				}
+			}).then(function(response){
 				callback(response);
 			});
 		}
@@ -171,6 +180,17 @@
 				$scope.sending_to_server = false;
 			});
 		}
+
+
+		// NEW
+		function loadRandomToScreen(){
+			DBase.getRandomToken($scope.active_user,$scope.user_lower_limit,function(response){
+				console.log(response.data.result);
+				$scope.random_tokens = response.data.result;
+			});
+		}
+		loadRandomToScreen();
+
 
 		$scope.moveToNextTweet = function(){
 			if($scope.current_tweet<$scope.unlabelled_tweet_ids.length-1){
